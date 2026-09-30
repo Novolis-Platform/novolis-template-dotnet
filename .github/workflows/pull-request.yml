@@ -2,13 +2,14 @@ name: Pull request
 on:
   pull_request:
     branches: [main]
-concurrency:
-  group: pr-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
   ci:
-    uses: Novolis-Platform/novolis-workflows/.github/workflows/dotnet-pull-request.yml@main
-    secrets: inherit
-    permissions:
-      contents: read
-      packages: read
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Template repository has no solution
+        run: echo "novolis-template-dotnet has no project or solution to build."
